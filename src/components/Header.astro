@@ -1,0 +1,54 @@
+<header class="flex justify-between items-center py-8">
+    <h1 class="text-md font-semibold bg-primary-dark p-1 text-black">[Armando Rios]</h1>
+    <nav id="nav-link" class="hidden max-lg:absolute max-lg:w-[90%] max-lg:pb-8 max-lg:top-24 max-lg:flex-col lg:flex max-lg:gap-6 gap-4 bg-[#121212ce]">
+        <a href="" class="text-gray-500 text-sm hover:border-b border-primary-dark">./<span class="text-md text-primary-dark">Home</span></a>
+        <a href="" class="text-gray-500 text-sm hover:border-b border-primary-dark">./<span class="text-md text-primary-dark">Blog</span></a>
+        <a href="" class="text-gray-500 text-sm hover:border-b border-primary-dark">./<span class="text-md text-primary-dark">Projects</span></a>
+        <a href="" class="text-gray-500 text-sm hover:border-b border-primary-dark">./<span class="text-md text-primary-dark">Account</span></a>
+    </nav>
+    <button id="open-menu" class="lg:hidden">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>          
+    </button>
+    <button id="close-menu" class="hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+        </svg>                             
+    </button>
+</header>
+
+
+<script>
+    const $ = (selector) => document.querySelector(selector)
+    const open = $("#open-menu")
+    const close = $("#close-menu")
+    const nav = $("#nav-link")
+
+     // Función para ocultar el menú si se hace clic fuera de él
+    function closeMenuOnClickOutside(event) {
+        if (!nav.contains(event.target) && event.target !== open) {
+            nav.classList.add("hidden");
+            close.classList.add("hidden")
+            open.classList.remove("hidden")
+            // Eliminar el event listener después de ocultar el menú
+            document.removeEventListener("click", closeMenuOnClickOutside);
+        }
+    }
+
+    open.addEventListener("click", (event) => {
+        event.stopPropagation(); // Evitar que el clic se propague al documento
+        open.classList.add("hidden")
+        close.classList.remove("hidden")
+        nav.classList.remove("hidden")
+        nav.classList.add("flex")
+        document.addEventListener("click", closeMenuOnClickOutside);
+    })
+
+    close.addEventListener("click", () => {
+        close.classList.add("hidden")
+        open.classList.remove("hidden")
+        nav.classList.add("hidden")
+        nav.classList.remove("flex")
+    })
+</script>
